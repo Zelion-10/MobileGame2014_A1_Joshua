@@ -13,17 +13,18 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     bool isTestMobile;
 
-    GameController gameController;
+    private GameController gameController;
+    private PlayerHealth playerHealth; // Reference to PlayerHealth
 
-    bool isMobilePlatform = true;
+    private bool isMobilePlatform = true;
+    private Camera _Camera;
+    private Vector2 destination;
 
-    Camera _Camera;
-    Vector2 destination;
-    // Start is called before the first frame update
     void Start()
     {
         _Camera = Camera.main;
-        gameController = FindAnyObjectByType<GameController>();
+        gameController = FindObjectOfType<GameController>();
+        playerHealth = GetComponent<PlayerHealth>(); // Get PlayerHealth component
 
         if (!isTestMobile)
         {
@@ -31,36 +32,32 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         if (isMobilePlatform)
         {
             GetTouchInput();
         }
-
         else
         {
-            GetTriditionalInput();
-
+            GetTraditionalInput();
         }
 
         move();
-        Checkboundaries();
-
-
-
+        CheckBoundaries();
     }
 
-    void move() { transform.position = destination; }
-    void GetTriditionalInput()
+    void move()
+    {
+        transform.position = destination;
+    }
+
+    void GetTraditionalInput()
     {
         float axisX = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
         float axisY = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
         destination = new Vector3(axisX + transform.position.x, axisY + transform.position.y, 0);
-
     }
 
     void GetTouchInput()
@@ -71,13 +68,13 @@ public class PlayerBehaviour : MonoBehaviour
             destination = Vector2.Lerp(transform.position, destination, speed * Time.deltaTime);
         }
     }
-    void Checkboundaries()
+
+    void CheckBoundaries()
     {
         if (transform.position.x > horizontalBoundary.max)
         {
             transform.position = new Vector3(horizontalBoundary.min, transform.position.y, 0);
         }
-
         else if (transform.position.x < horizontalBoundary.min)
         {
             transform.position = new Vector3(horizontalBoundary.max, transform.position.y, 0);
@@ -87,27 +84,18 @@ public class PlayerBehaviour : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, verticalBoundary.max, 0);
         }
-
         else if (transform.position.y < verticalBoundary.min)
         {
             transform.position = new Vector3(transform.position.x, verticalBoundary.min);
         }
     }
 
-
-  
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-            
-            gameController.ChangeScore(9);
-            //Destroy(collision.gameObject);
-            //collision.gameObject.SetActive(false);  
-            collision.GetComponent<EnemyBehavior>().DyingSequence();
+            // Call the TakeDamage method from PlayerHealth
+            playerHealth.TakeDamage();
         }
-            
-
-        
     }
 }

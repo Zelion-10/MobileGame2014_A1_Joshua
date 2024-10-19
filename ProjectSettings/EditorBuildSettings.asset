@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Instruction.unity
     guid: 65d5039566a4bbe4ab85a9cfc33fa242
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: 51fa176d625eb1440825fb0be77e4ae0
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: c2eba934163b55345a5c5caa680ffbc0, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: ddff563f0ae00dc4884c2ce015033f10, type: 2}
