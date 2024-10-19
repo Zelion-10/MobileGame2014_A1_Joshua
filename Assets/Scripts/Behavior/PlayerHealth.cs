@@ -1,35 +1,35 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // For loading scenes
-using TMPro; // For updating UI using TextMeshPro
+using UnityEngine.SceneManagement;
+using TMPro; 
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
-    private int maxLives = 3; // Player's maximum lives
-    private int currentLives; // Player's current lives
+    private int maxLives = 3; 
+    private int currentLives; 
 
     [SerializeField]
-    private AudioClip hitSFX;  // Sound effect for player hit
+    private AudioClip hitSFX;  
     [SerializeField]
-    private AudioClip deathSFX; // Sound effect for player death
-    private AudioSource audioSource; // Reference to AudioSource for playing sounds
+    private AudioClip deathSFX; 
+    private AudioSource audioSource; 
 
     [SerializeField]
-    private TMP_Text livesText; // Reference to the TextMeshPro UI for displaying lives
+    private TMP_Text livesText; 
 
-    private bool isDead = false; // To prevent multiple deaths
+    private bool isDead = false; 
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>(); // Get the AudioSource component
-        currentLives = maxLives; // Initialize player with full lives
-        UpdateLivesUI(); // Update UI with current lives
+        audioSource = GetComponent<AudioSource>();
+        currentLives = maxLives;
+        UpdateLivesUI(); 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Detect collision with damaging objects (e.g., enemies, hazards)
-        if (collision.CompareTag("Enemy") && !isDead) // Change to the tag of your damaging objects
+        if (collision.CompareTag("Enemy") && !isDead) 
         {
             TakeDamage();
         }
@@ -39,8 +39,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!isDead)
         {
-            currentLives--; // Decrease lives when taking damage
-            UpdateLivesUI(); // Update the UI to reflect remaining lives
+            currentLives--; 
+            UpdateLivesUI(); 
 
             // Play the hit sound effect when the player takes damage
             if (audioSource != null && hitSFX != null)
@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        isDead = true; // Prevent triggering death multiple times
+        isDead = true; 
 
         // Play the death sound effect
         if (audioSource != null && deathSFX != null)
@@ -78,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (livesText != null)
         {
-            livesText.text = "Lives: " + currentLives; // Update lives text in the UI
+            livesText.text = "Health: " + currentLives; 
         }
     }
 }

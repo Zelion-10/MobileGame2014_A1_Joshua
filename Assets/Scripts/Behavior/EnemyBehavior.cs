@@ -19,18 +19,18 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField]
     Boundary horizontalBoundary;
 
-    SpriteRenderer spriteRenderer; // Reference to SpriteRenderer
+    SpriteRenderer spriteRenderer; 
 
     [Header("SFX")]
     [SerializeField]
-    private AudioClip deathSFX; // Sound effect for enemy death
-    private AudioSource audioSource; // Reference to the AudioSource component
+    private AudioClip deathSFX; 
+    private AudioSource audioSource; 
 
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
-        audioSource = GetComponent<AudioSource>(); // Get the AudioSource component
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
+        audioSource = GetComponent<AudioSource>(); 
         Reset();
     }
 

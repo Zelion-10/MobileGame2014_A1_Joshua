@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 897199949}
   - component: {fileID: 897199948}
   m_Layer: 5
-  m_Name: Lives
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1098,7 +1098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7325237947381624969, guid: 9d9446bbd3831a749b27d7bdf3212809, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.03
+      value: 8.819
       objectReference: {fileID: 0}
     - target: {fileID: 7325237947381624969, guid: 9d9446bbd3831a749b27d7bdf3212809, type: 3}
       propertyPath: m_LocalPosition.z
