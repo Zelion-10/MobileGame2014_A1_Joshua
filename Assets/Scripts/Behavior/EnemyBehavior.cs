@@ -10,9 +10,8 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField]
     Boundary HorizontalSpeedRange;
 
-
     float Verticalspeed;
-   float Horizontalspeed;
+    float Horizontalspeed;
 
     [SerializeField]
     Boundary verticalBoundary;
@@ -21,45 +20,66 @@ public class EnemyBehavior : MonoBehaviour
     Boundary horizontalBoundary;
 
     SpriteRenderer spriteRenderer; // Reference to SpriteRenderer
+
+    [Header("SFX")]
+    [SerializeField]
+    private AudioClip deathSFX; // Sound effect for enemy death
+    private AudioSource audioSource; // Reference to the AudioSource component
+
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
+        audioSource = GetComponent<AudioSource>(); // Get the AudioSource component
         Reset();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position= new Vector2(Mathf.PingPong(Horizontalspeed*Time.time,horizontalBoundary.max - horizontalBoundary.min )+ horizontalBoundary.min/*transform.position.x+ Horizontalspeed*Time.deltaTime*/,transform.position.y + Verticalspeed* Time.deltaTime);
+        // Enemy movement logic
+        transform.position = new Vector2(
+            Mathf.PingPong(Horizontalspeed * Time.time, horizontalBoundary.max - horizontalBoundary.min) + horizontalBoundary.min,
+            transform.position.y + Verticalspeed * Time.deltaTime
+        );
 
-        if(transform.position.y < verticalBoundary.min)
+        if (transform.position.y < verticalBoundary.min)
         {
             Reset();
-
         }
-
-        //if (transform.position.x>horizontalBoundary.max|| transform.position.y > horizontalBoundary.min)
-        //{
-        //    Horizontalspeed = -Horizontalspeed;
-        //}
     }
 
     public void DyingSequence()
     {
+        // Play death sound effect
+        if (audioSource != null && deathSFX != null)
+        {
+            audioSource.PlayOneShot(deathSFX);
+        }
+
+        // Disable enemy's sprite and collider after death
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+
+        // Delay resetting the enemy so the sound can play fully
+        StartCoroutine(ResetAfterDelay());
+    }
+
+    private IEnumerator ResetAfterDelay()
+    {
+        yield return new WaitForSeconds(deathSFX.length); // Wait for the death sound to finish playing
+        Reset();
     }
 
     private void Reset()
     {
+        // Reset the enemy's position, speed, and enable components
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
-        gameObject.SetActive(true);    
+        gameObject.SetActive(true);
         transform.position = new Vector2(Random.Range(horizontalBoundary.min, horizontalBoundary.max), verticalBoundary.max);
         Verticalspeed = Random.Range(VerticalSpeedRange.min, VerticalSpeedRange.max);
         Horizontalspeed = Random.Range(HorizontalSpeedRange.min, HorizontalSpeedRange.max);
-        spriteRenderer.color = new Color(Random.value, Random.value, Random.value);
+        spriteRenderer.color = new Color(Random.value, Random.value, Random.value); // Randomize enemy color
     }
 }

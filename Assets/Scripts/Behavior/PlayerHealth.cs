@@ -1,51 +1,84 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.SceneManagement; // For loading scenes
+using TMPro; // For updating UI using TextMeshPro
+
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
-    private int lives = 3; // Total lives for the player
-    public GameObject gameOverUI; // Reference to Game Over UI
-    public string sceneToLoad = "GameOverScene"; // Name of the scene to load when player dies
-    public TMP_Text livesText; // Reference to the UI Text component
+    private int maxLives = 3; // Player's maximum lives
+    private int currentLives; // Player's current lives
 
-    private void Start()
+    [SerializeField]
+    private AudioClip hitSFX;  // Sound effect for player hit
+    [SerializeField]
+    private AudioClip deathSFX; // Sound effect for player death
+    private AudioSource audioSource; // Reference to AudioSource for playing sounds
+
+    [SerializeField]
+    private TMP_Text livesText; // Reference to the TextMeshPro UI for displaying lives
+
+    private bool isDead = false; // To prevent multiple deaths
+
+    void Start()
     {
-        UpdateLivesDisplay(); // Update the display at the start
+        audioSource = GetComponent<AudioSource>(); // Get the AudioSource component
+        currentLives = maxLives; // Initialize player with full lives
+        UpdateLivesUI(); // Update UI with current lives
     }
 
-    // Method to reduce lives
-    public void TakeDamage()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        lives--;
-        Debug.Log("Lives left: " + lives);
-
-        // Update the UI
-        UpdateLivesDisplay();
-
-        // Check if player is still alive
-        if (lives <= 0)
+        // Detect collision with damaging objects (e.g., enemies, hazards)
+        if (collision.CompareTag("Enemy") && !isDead) // Change to the tag of your damaging objects
         {
-            Die();
+            TakeDamage();
         }
     }
 
-    // Update the UI Text
-    private void UpdateLivesDisplay()
+    public void TakeDamage()
+    {
+        if (!isDead)
+        {
+            currentLives--; // Decrease lives when taking damage
+            UpdateLivesUI(); // Update the UI to reflect remaining lives
+
+            // Play the hit sound effect when the player takes damage
+            if (audioSource != null && hitSFX != null)
+            {
+                audioSource.PlayOneShot(hitSFX);
+            }
+
+            if (currentLives <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
+    private void Die()
+    {
+        isDead = true; // Prevent triggering death multiple times
+
+        // Play the death sound effect
+        if (audioSource != null && deathSFX != null)
+        {
+            audioSource.PlayOneShot(deathSFX);
+        }
+
+        // Delay scene transition until death SFX finishes
+        Invoke("LoadGameOverScene", deathSFX.length);
+    }
+
+    private void LoadGameOverScene()
+    {
+        SceneManager.LoadScene("GameOverScene"); // Replace with your Game Over scene name
+    }
+
+    private void UpdateLivesUI()
     {
         if (livesText != null)
         {
-            livesText.text = "Lives: " + lives; // Update the displayed text
+            livesText.text = "Lives: " + currentLives; // Update lives text in the UI
         }
-    }
-
-    // Handle player death
-    private void Die()
-    {
-        Debug.Log("Game Over!");
-        gameObject.SetActive(false);
-
-        // Load the specified scene
-        SceneManager.LoadScene(sceneToLoad);
     }
 }
