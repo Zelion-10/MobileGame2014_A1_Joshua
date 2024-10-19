@@ -46,4 +46,12 @@ public class GameController : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
 }

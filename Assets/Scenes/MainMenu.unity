@@ -1268,7 +1268,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 214183867}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: LoadGameScene
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
