@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
   
-    public AudioClip buttonClickSound; // Assign the audio clip for the button click in the Inspector
+    public AudioClip buttonClickSound; 
     private AudioSource audioSource;
     public float sceneSwitchDelay = 0.5f; // Delay in seconds before switching the scene
 
@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        // Get or add an AudioSource component to this GameObject
+        
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -26,16 +26,15 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-       
+        ScoreManager.Score = score;
     }
 
     public void ChangeScore(int amount)
     {
-        score += amount;
-        Debug.Log("Score changed: " + score);
+        ScoreManager.Score += amount; // Update score in ScoreManager
+        Debug.Log("Score changed: " + ScoreManager.Score);
         UpdateScore();
     }
-
     void UpdateScore()
     {
         if (scoreText == null)
@@ -43,8 +42,14 @@ public class GameController : MonoBehaviour
             Debug.LogError("scoreText is not assigned! Please assign a TextMeshProUGUI object in the Inspector.");
             return; // Exit the method if scoreText is not assigned
         }
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Score: " + ScoreManager.Score;
     }
+    public void OnPlayerDeath()
+    {
+        GameOver(); 
+                    
+    }
+
 
     public void LoadGameScene()
     {
@@ -71,20 +76,20 @@ public class GameController : MonoBehaviour
     {
         if (buttonClickSound != null)
         {
-            audioSource.PlayOneShot(buttonClickSound); // Play the button click sound
-            StartCoroutine(WaitAndSwitchScene(sceneIndex)); // Start coroutine to wait and switch scene
+            audioSource.PlayOneShot(buttonClickSound); 
+            StartCoroutine(WaitAndSwitchScene(sceneIndex)); 
         }
         else
         {
-            SceneManager.LoadScene(sceneIndex); // If no sound, switch scene immediately
+            SceneManager.LoadScene(sceneIndex); 
         }
     }
 
     // Coroutine to wait before switching the scene
     private IEnumerator WaitAndSwitchScene(int sceneIndex)
     {
-        yield return new WaitForSeconds(sceneSwitchDelay); // Wait for the delay
-        SceneManager.LoadScene(sceneIndex); // Switch to the specified scene
+        yield return new WaitForSeconds(sceneSwitchDelay); 
+        SceneManager.LoadScene(sceneIndex); 
     }
 
     // Method to play button sound and quit the application
@@ -92,19 +97,19 @@ public class GameController : MonoBehaviour
     {
         if (buttonClickSound != null)
         {
-            audioSource.PlayOneShot(buttonClickSound); // Play the button click sound
-            StartCoroutine(WaitAndQuit()); // Start coroutine to wait and quit
+            audioSource.PlayOneShot(buttonClickSound); 
+            StartCoroutine(WaitAndQuit()); 
         }
         else
         {
-            QuitImmediately(); // If no sound, quit immediately
+            QuitImmediately(); 
         }
     }
 
     // Coroutine to wait before quitting the application
     private IEnumerator WaitAndQuit()
     {
-        yield return new WaitForSeconds(sceneSwitchDelay); // Wait for the delay
+        yield return new WaitForSeconds(sceneSwitchDelay); 
         QuitImmediately();
     }
 

@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6903aefaa46b46645b3f5cb5b49de894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 721690611}
+  scoreText: {fileID: 0}
   buttonClickSound: {fileID: 8300000, guid: 676d8467c0f6bff41b7e12f4a9b634b2, type: 3}
   sceneSwitchDelay: 0.5
 --- !u!4 &821103957
@@ -1293,7 +1293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b41f1e80ed6c1745a6e384b7111ebd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 721690611}
+  pointText: {fileID: 721690611}
 --- !u!1 &1860130259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1380,18 @@ MonoBehaviour:
       - m_Target: {fileID: 821103956}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
         m_MethodName: LoadGameScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1719195121}
+        m_TargetAssemblyTypeName: GameOverController, Assembly-CSharp
+        m_MethodName: TryAgain
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

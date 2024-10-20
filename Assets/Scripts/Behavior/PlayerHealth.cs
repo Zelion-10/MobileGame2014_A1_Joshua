@@ -71,7 +71,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void LoadGameOverScene()
     {
-        SceneManager.LoadScene("GameOverScene"); // Replace with your Game Over scene name
+        SceneManager.LoadScene("GameOverScene"); 
     }
 
     private void UpdateLivesUI()

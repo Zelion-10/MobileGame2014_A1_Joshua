@@ -69,6 +69,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    // added from class 
     void CheckBoundaries()
     {
         if (transform.position.x > horizontalBoundary.max)
@@ -90,6 +91,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    //On trigger the player will take damage and lower the hit count,,,,, I am too tired for this 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))

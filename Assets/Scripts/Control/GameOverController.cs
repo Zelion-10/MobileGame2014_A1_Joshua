@@ -4,29 +4,22 @@ using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_Text scoreText; // Reference to the UI Text for displaying score
+    [SerializeField] private TMP_Text pointText;
 
     void Start()
     {
-        LoadScore(); // Load the score when the Game Over scene starts
+        Setup(ScoreManager.Score); 
     }
 
-    private void LoadScore()
+    public void Setup(int score)
     {
-        int score = PlayerPrefs.GetInt("PlayerScore", 0); // Get score, default to 0
-        scoreText.text = "Score: " + score; // Update UI text
+        gameObject.SetActive(true);
+        pointText.text = score.ToString() + " POINTS";
     }
 
-    public void RestartGame()
+    public void TryAgain()
     {
-        PlayerPrefs.DeleteKey("PlayerScore"); // Clear score for next game
-        SceneManager.LoadScene("GameScene"); // Load the main game scene
-    }
-
-    public void LoadMainMenu()
-    {
-        PlayerPrefs.DeleteKey("PlayerScore"); // Clear score for next game
-        SceneManager.LoadScene("MainMenu"); // Load the main menu scene
+        ScoreManager.ResetScore(); 
+        SceneManager.LoadScene("GameScene"); 
     }
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    public float bulletSpeed = 10f;  // Speed at which the bullet moves
-    private GameController gameController; // Reference to GameController
+    public float bulletSpeed = 10f;  
+    private GameController gameController; 
 
     private void Awake()
     {
@@ -54,7 +54,7 @@ public class PlayerBullet : MonoBehaviour
                 enemyBehavior.DyingSequence();
             }
 
-            Destroy(gameObject);  // Destroy the bullet
+            Destroy(gameObject);  
         }
     }
 }
