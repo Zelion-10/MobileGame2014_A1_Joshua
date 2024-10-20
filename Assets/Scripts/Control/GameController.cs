@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class GameController : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class GameController : MonoBehaviour
        
     [SerializeField]
     private TextMeshProUGUI scoreText;
-
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip buttonClick;
     int score = 0;
     // Start is called before the first frame update
     void Start()
@@ -51,18 +54,24 @@ public class GameController : MonoBehaviour
    public void LoadGameScene()
     {
         SceneManager.LoadScene(1);
-        
+        audioSource.PlayOneShot(buttonClick);
+
+
 
     }
 
     public void LoadInstructionScene()
     {
         SceneManager.LoadScene(2);
+        audioSource.PlayOneShot(buttonClick);
+
     }
 
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
+        audioSource.PlayOneShot(buttonClick);
+
     }
     public void Quit()
     {
@@ -70,5 +79,7 @@ public class GameController : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+        audioSource.PlayOneShot(buttonClick);
+
     }
 }
