@@ -1,27 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
-
-       
-    [SerializeField]
-    private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+  
+    public AudioClip buttonClickSound; // Assign the audio clip for the button click in the Inspector
     private AudioSource audioSource;
-    [SerializeField]
-    private AudioClip buttonClick;
-    int score = 0;
-    // Start is called before the first frame update
+    public float sceneSwitchDelay = 0.5f; // Delay in seconds before switching the scene
+
+    private int score = 0;
+
     void Start()
     {
-        
+        // Get or add an AudioSource component to this GameObject
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateScore();
@@ -29,11 +26,9 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("Game Over called");
-        PlayerPrefs.SetInt("PlayerScore", score);
-        PlayerPrefs.Save(); // Ensure it's saved
-        SceneManager.LoadScene("GameOverScene"); // Load Game Over scene
+       
     }
+
     public void ChangeScore(int amount)
     {
         score += amount;
@@ -48,38 +43,77 @@ public class GameController : MonoBehaviour
             Debug.LogError("scoreText is not assigned! Please assign a TextMeshProUGUI object in the Inspector.");
             return; // Exit the method if scoreText is not assigned
         }
-        scoreText.text = "Score: " + score; 
+        scoreText.text = "Score: " + score;
     }
 
-   public void LoadGameScene()
+    public void LoadGameScene()
     {
-        SceneManager.LoadScene(1);
-        audioSource.PlayOneShot(buttonClick);
-
-
-
+        PlayButtonSoundAndSwitchScene(1);
     }
 
     public void LoadInstructionScene()
     {
-        SceneManager.LoadScene(2);
-        audioSource.PlayOneShot(buttonClick);
-
+        PlayButtonSoundAndSwitchScene(2);
     }
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(0);
-        audioSource.PlayOneShot(buttonClick);
-
+        PlayButtonSoundAndSwitchScene(0);
     }
+
     public void Quit()
+    {
+        PlayButtonSoundAndQuit();
+    }
+
+    // Method to play button sound and switch scene
+    public void PlayButtonSoundAndSwitchScene(int sceneIndex)
+    {
+        if (buttonClickSound != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound); // Play the button click sound
+            StartCoroutine(WaitAndSwitchScene(sceneIndex)); // Start coroutine to wait and switch scene
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneIndex); // If no sound, switch scene immediately
+        }
+    }
+
+    // Coroutine to wait before switching the scene
+    private IEnumerator WaitAndSwitchScene(int sceneIndex)
+    {
+        yield return new WaitForSeconds(sceneSwitchDelay); // Wait for the delay
+        SceneManager.LoadScene(sceneIndex); // Switch to the specified scene
+    }
+
+    // Method to play button sound and quit the application
+    public void PlayButtonSoundAndQuit()
+    {
+        if (buttonClickSound != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound); // Play the button click sound
+            StartCoroutine(WaitAndQuit()); // Start coroutine to wait and quit
+        }
+        else
+        {
+            QuitImmediately(); // If no sound, quit immediately
+        }
+    }
+
+    // Coroutine to wait before quitting the application
+    private IEnumerator WaitAndQuit()
+    {
+        yield return new WaitForSeconds(sceneSwitchDelay); // Wait for the delay
+        QuitImmediately();
+    }
+
+    // Quit application
+    private void QuitImmediately()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
-        audioSource.PlayOneShot(buttonClick);
-
     }
 }

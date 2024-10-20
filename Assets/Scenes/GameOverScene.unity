@@ -725,6 +725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 721690611}
+  buttonClickSound: {fileID: 8300000, guid: 676d8467c0f6bff41b7e12f4a9b634b2, type: 3}
+  sceneSwitchDelay: 0.5
 --- !u!4 &821103957
 Transform:
   m_ObjectHideFlags: 0
