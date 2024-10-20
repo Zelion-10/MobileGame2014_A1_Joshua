@@ -297,7 +297,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1719195119}
+      - m_Target: {fileID: 821103956}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
         m_MethodName: LoadMainMenu
         m_Mode: 1
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 721690612}
   - component: {fileID: 721690611}
   m_Layer: 5
-  m_Name: Title
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,6 +695,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721690609}
   m_CullTransparentMesh: 1
+--- !u!1 &821103955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 821103957}
+  - component: {fileID: 821103956}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &821103956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821103955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6903aefaa46b46645b3f5cb5b49de894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 721690611}
+--- !u!4 &821103957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821103955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 804.248, y: 1566.3601, z: -3.0724084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &837612244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,27 +1256,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1719195120}
-  - component: {fileID: 1719195119}
+  - component: {fileID: 1719195121}
   m_Layer: 0
-  m_Name: 'GameController '
+  m_Name: GameOverController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1719195119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719195118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6903aefaa46b46645b3f5cb5b49de894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
 --- !u!4 &1719195120
 Transform:
   m_ObjectHideFlags: 0
@@ -1247,6 +1279,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1719195121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719195118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b41f1e80ed6c1745a6e384b7111ebd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 721690611}
 --- !u!1 &1860130259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1375,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1719195119}
+      - m_Target: {fileID: 821103956}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
         m_MethodName: LoadGameScene
         m_Mode: 1
@@ -1464,3 +1509,4 @@ SceneRoots:
   - {fileID: 889782904}
   - {fileID: 1363681282}
   - {fileID: 1719195120}
+  - {fileID: 821103957}
